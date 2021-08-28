@@ -8,10 +8,14 @@ blocks:
   - name: Tests
     task:
       jobs:
-      - name: Run tests
-        commands:
-          - checkout
-          - cache restore
-          - bundle install --path vendor/bundle
-          - cache store
-          - bundle exec rake spec
+        - name: Run tests
+          commands:
+            - checkout
+            - cache restore
+            - bundle install --path vendor/bundle
+            - cache store
+            - bundle exec rake spec
+      epilogue:
+        always:
+          commands:
+            - test-results publish test-results/rspec/rspec.xml
